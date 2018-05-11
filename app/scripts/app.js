@@ -28,14 +28,27 @@ Instructions:
    * @param  {String} url - The URL to fetch.
    * @return {Promise}    - A Promise that resolves when the XHR succeeds and fails otherwise.
    */
-  function get(url) {
-    /*
-    Use the Fetch API to GET a URL.
-    Return the fetch.
+   function get(url) {
+        /*
+        Use the Fetch API to GET a URL.
+        Return the fetch.
 
-    Your code goes here!
-     */
-  }
+        Your code goes here!
+         */
+
+         // url (required), options (optional)
+         return fetch(url, {
+         	method: 'get'
+        });
+         /*
+         .then(function(response) {
+
+         })
+         .catch(function(err) {
+         	// Error :(
+         });
+         */
+    }
 
   /**
    * Performs an XHR for a JSON and returns a parsed JSON response.
@@ -48,6 +61,21 @@ Instructions:
 
     Your code goes here!
      */
+
+     return get(url).then(function(response) {
+         return response.json();
+     });
+
+     /*
+    return new Promise(function(resolve, reject) {
+        if( JSON.parse(get(url)) ) {
+            resolve();
+        } else {
+            reject(Error(errorText));
+        }
+    })
+    */
+
   }
 
   window.addEventListener('WebComponentsReady', function() {
@@ -58,6 +86,18 @@ Instructions:
 
     Your code goes here too!
      */
-    // getJSON('../data/earth-like-results.json')
+    getJSON('../data/earth-like-results.json')
+    .then(function(response) {
+        console.log(response);
+        addSearchHeader(response.query);
+        return response.results[0];
+    })
+    .then(function(url) {
+        console.log(url);
+    })
+    .catch(function(error) {
+        addSearchHeader('unknown');
+        console.log(error);
+    })
   });
 })(document);
