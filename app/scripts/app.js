@@ -53,7 +53,8 @@ Instructions:
    */
   function getJSON(url) {
     return get(url).then(function(response) {
-      return response.json();
+        console.log(response);
+        return response.json();
     });
   }
 
@@ -64,6 +65,24 @@ Instructions:
 
     Your code goes here!
      */
-    // getJSON('../data/earth-like-results.json')
+    getJSON('../data/earth-like-results.json')
+    .then(function(response) {
+        addSearchHeader(response.query);
+        //console.log(response.results[0]);
+        return getJSON(response.results[0]);
+    })
+    .catch(function() {
+        throw Error('Search Request Error')
+    })
+    .then(createPlanetThumb)
+    /*
+    .then(function(planetData) {
+        createPlanetThumb(planetData);
+    })
+    */
+    .catch(function(error) {
+        addSearchHeader('unknown');
+        console.log(error);
+    });
   });
 })(document);
