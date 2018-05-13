@@ -62,11 +62,31 @@ Instructions:
     /*
     Refactor this code!
      */
+
+    
+    getJSON('../data/earth-like-results.json')
+    .then(function(response) {
+        let sequence = Promise.resolve();
+        response.results.forEach(function(url) {
+            console.log(url);
+            sequence = sequence.then(function() {
+                return getJSON(url)
+            })
+            .then(createPlanetThumb);
+        })
+    })
+
+
+
+    /*
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
       response.results.forEach(function(url) {
         getJSON(url).then(createPlanetThumb);
       });
     });
+    */
+
+
   });
 })(document);
