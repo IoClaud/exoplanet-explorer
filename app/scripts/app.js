@@ -63,18 +63,19 @@ Instructions:
     Refactor this code!
      */
 
-    
+
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
         let sequence = Promise.resolve();
         response.results.forEach(function(url) {
             console.log(url);
-            sequence = sequence.then(function() {
+            sequence.then(function() {
                 return getJSON(url)
             })
             .then(createPlanetThumb);
         })
     })
+
 
 
 
@@ -86,6 +87,7 @@ Instructions:
       });
     });
     */
+
 
 
   });
