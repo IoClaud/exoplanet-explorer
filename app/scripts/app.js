@@ -47,9 +47,23 @@ proper order even if all the requests haven't finished.
    * @param  {String} url - The JSON URL to fetch.
    * @return {Promise}    - A promise that passes the parsed JSON response.
    */
+
+   /*
   function getJSON(url) {
     return get(url).then(function(response) {
       return response.json();
+    });
+  }
+  */
+
+  function getJSON(url) {
+    return get(url)
+    .then(function(response) {
+        return response.json();
+    })
+    .catch(function(err) {
+      console.log("getJSON failed for", url, err);
+      throw err;
     });
   }
 
